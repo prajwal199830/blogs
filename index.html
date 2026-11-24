@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TaleThali - 100 Dishes. 100 Stories. One Thali.</title>
+<title>TaleThali - Username Only - Connect People Based On Stories</title>
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -11,69 +11,178 @@
 <header>
   <div class="logo">🍽️ TaleThali</div>
   <div class="header-right">
-    <input type="text" id="search" placeholder="Search a dish...">
-    <button id="darkToggle" title="Toggle dark mode">🌙</button>
-    <button id="serveBtn" class="serve-btn">Serve Your Story</button>
+    <input type="text" id="search" placeholder="Search dish...">
+    <button id="darkToggle">🌙</button>
+    <button id="inboxBtn" class="icon-btn hidden">📩 <span id="inboxCount" class="badge"></span></button>
+    <button id="serveBtn" class="serve-btn">Serve Story</button>
+    <div id="authArea">
+      <button id="loginBtn" class="auth-btn">Login / Sign Up</button>
+      <div id="userArea" class="hidden">
+        <span id="userHandle" class="handle"></span>
+        <span id="streakDisplay" class="streak">🔥0</span>
+        <button id="profileBtn">⚙️</button>
+        <button id="logoutBtn">Logout</button>
+      </div>
+    </div>
   </div>
 </header>
 
 <main id="homeView">
   <section class="hero">
-    <div class="thali-plate">
-      <div class="thali-center">
-        <h1>TaleThali</h1>
-        <p>100 Dishes. 100 Stories.</p>
-      </div>
-      <div class="mini-katori k1">💖</div>
-      <div class="mini-katori k2">👻</div>
-      <div class="mini-katori k3">💼</div>
-      <div class="mini-katori k4">😂</div>
-      <div class="mini-katori k5">🏠</div>
-      <div class="mini-katori k6">✈️</div>
-    </div>
-    <h2>Pick a bowl. Taste a story.</h2>
-    <p class="subtitle">One thali, 100 different flavours of life.</p>
+    <h1>Connect People Based On Stories</h1>
+    <p class="subtitle">Username Only • No Email • @pikkke Style • City Battle Live</p>
+    <div class="thali-plate"><div class="thali-center"><h2>TaleThali</h2><p>100 Stories. One Thali.</p></div></div>
+  </section>
+
+  <section id="cityBattle" class="card-section">
+    <h2>🏆 City Thali Battle - Today</h2>
+    <p class="small">Which city serves spiciest stories today?</p>
+    <div id="cityLeaderboard" class="leaderboard"></div>
+    <button id="boostCityBtn" class="boost-btn hidden">Make My City Win! →</button>
+  </section>
+
+  <section id="streakSection" class="card-section hidden">
+    <h2>🔥 Your Streak</h2>
+    <div id="streakCalendar" class="streak-cal"></div>
+    <p id="streakText"></p>
+    <div id="streakBadges"></div>
+  </section>
+
+  <section id="chutneySection" class="card-section">
+    <h2>🥣 Today's Chutney</h2>
+    <p id="dailyPrompt" class="prompt"></p>
+    <button id="answerPromptBtn" class="serve-btn">Answer This →</button>
+  </section>
+
+  <section id="secretKatori" class="card-section hidden secret-glow">
+    <h2>🤫 Secret Katori - Night Owls Only (12-4 AM)</h2>
+    <p>Darkest confessions, only visible at night</p>
+    <button onclick="openCategory('Secret Katori')" class="serve-btn">Enter →</button>
+  </section>
+
+  <section id="topSpicy" class="card-section">
+    <h2>🌶️ Today's Top 10 Spicy</h2>
+    <div id="topSpicyList"></div>
   </section>
 
   <section class="filters">
-    <button class="filter-btn active" data-taste="all">All Dishes</button>
+    <button class="filter-btn active" data-taste="all">All</button>
     <button class="filter-btn" data-taste="sweet">Sweet 🍯</button>
     <button class="filter-btn" data-taste="spicy">Spicy 🌶️</button>
     <button class="filter-btn" data-taste="tangy">Tangy 🍋</button>
     <button class="filter-btn" data-taste="comfort">Comfort 🍚</button>
+    <button class="filter-btn" data-taste="thaliForTwo">Thali For Two 💞</button>
+  </section>
+
+  <section id="tasteMatch" class="card-section hidden">
+    <h2>💘 Your Taste Match</h2>
+    <div id="tasteMatchList"></div>
+  </section>
+
+  <section id="thaliProgress" class="card-section hidden">
+    <h2>🍽️ Full Thali Progress</h2>
+    <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+    <p id="progressText"></p>
+    <div id="badgeDisplay"></div>
   </section>
 
   <section id="categoryGrid" class="grid"></section>
 </main>
 
 <section id="categoryView" class="hidden">
-  <button class="back" onclick="showHome()">← Back to Thali</button>
-  <div class="category-header">
-    <div id="catEmoji" class="big-bowl">🍲</div>
-    <div>
-      <h1 id="catName">Category</h1>
-      <p id="catDish">Served as ...</p>
-      <p id="catDesc"></p>
-    </div>
-  </div>
+  <button class="back" onclick="showHome()">← Back</button>
+  <div class="category-header"><div id="catEmoji" class="big-bowl">🍲</div><div><h1 id="catName"></h1><p id="catDish"></p><p id="catDesc"></p></div></div>
   <div id="blogList" class="blog-list"></div>
 </section>
 
 <section id="blogView" class="hidden">
-  <button class="back" onclick="backToCategory()">← Back to Dish</button>
+  <button class="back" onclick="backToCategory()">← Back</button>
   <article id="blogArticle"></article>
+  <div id="chainNav" class="chain-nav hidden"></div>
+  <section class="actions">
+    <button id="chillyBtn" class="fire-btn">🌶️ Chilly (<span id="chillyCount">0</span>) <span id="chillyLevel"></span></button>
+    <div class="heat-meter"><div id="heatFill" class="heat-fill"></div></div>
+    <button id="shareBtn" class="share-btn">📤 Share</button>
+    <button id="chainBtn" class="msg-btn">🔗 Continue Chain</button>
+    <button id="messageAuthorBtn" class="msg-btn">💬 Message Author</button>
+  </section>
+  <section class="comments-section">
+    <h3>Comments</h3>
+    <div id="commentsList"></div>
+    <div class="comment-input"><input type="text" id="commentText" placeholder="Write a comment..."><button onclick="addComment()">Post</button></div>
+  </section>
 </section>
+
+<!-- Auth Modal - Username Only -->
+<div id="authModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close" onclick="closeAuthModal()">&times;</span>
+    <div class="tabs"><button id="loginTab" class="active">Login</button><button id="signupTab">Sign Up</button></div>
+    <p class="small">No email needed. Your @handle is your identity.</p>
+    <input type="text" id="authUsername" placeholder="@username (e.g. @pikkke)">
+    <input type="password" id="authPass" placeholder="Password">
+    <select id="citySelect">
+      <option value="">Select Your City</option>
+      <option>Mumbai</option><option>Pune</option><option>Nashik</option><option>Delhi</option><option>Bangalore</option><option>Hyderabad</option><option>Kolkata</option><option>Chennai</option><option>Nagpur</option><option>Indore</option><option>Jaipur</option><option>Lucknow</option><option>Ahmedabad</option><option>Surat</option><option>Other</option>
+    </select>
+    <div id="handlePreview" class="handle-preview"></div>
+    <button id="authSubmit">Login</button>
+    <p id="authStatus"></p>
+  </div>
+</div>
 
 <div id="addModal" class="modal hidden">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">&times;</span>
-    <h2>Serve Your Story to the Thali</h2>
-    <input type="text" id="authorName" placeholder="Your Name">
+    <h2>Serve Your Story</h2>
     <select id="categorySelect"></select>
-    <input type="text" id="subjectInput" placeholder="Subject Line">
-    <textarea id="detailsInput" placeholder="Your full story details..."></textarea>
-    <button onclick="saveStory()" id="saveBtn">Serve My Story →</button>
+    <input type="text" id="subjectInput" placeholder="Subject">
+    <textarea id="detailsInput" placeholder="Your story..."></textarea>
+    <label><input type="checkbox" id="isChainCheck"> Continue chain</label>
+    <input type="text" id="chainParentInput" placeholder="Parent slug" class="hidden">
+    <button onclick="saveStory()" id="saveBtn">Serve →</button>
     <p id="saveStatus"></p>
+  </div>
+</div>
+
+<div id="messageModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close" onclick="closeMessageModal()">&times;</span>
+    <h3>Request to <span id="msgToHandle"></span></h3>
+    <textarea id="messageText" placeholder="Why you want to connect..."></textarea>
+    <button onclick="sendMessageRequest()">Send Request</button>
+    <p id="messageStatus"></p>
+  </div>
+</div>
+
+<div id="profileModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close" onclick="closeProfileModal()">&times;</span>
+    <h3>Profile</h3>
+    <p>Handle: <span id="profileHandle"></span></p>
+    <input type="text" id="newHandleInput" placeholder="New @handle">
+    <button onclick="updateHandle()">Update Handle</button>
+    <hr>
+    <label><input type="checkbox" id="allowRequestsToggle"> Allow requests</label>
+    <button onclick="saveProfileSettings()">Save</button>
+    <p id="profileStatus"></p>
+  </div>
+</div>
+
+<div id="inboxModal" class="modal hidden">
+  <div class="modal-content large">
+    <span class="close" onclick="closeInbox()">&times;</span>
+    <h3>📩 Inbox</h3>
+    <div class="tabs"><button id="reqTab" class="active" onclick="showInboxTab('requests')">Requests</button><button id="chatTab" onclick="showInboxTab('chats')">Chats</button></div>
+    <div id="requestsList"></div>
+    <div id="chatsList" class="hidden"></div>
+    <div id="chatMessages" class="hidden">
+      <button onclick="backToChats()">← Back</button>
+      <h4 id="chatWith"></h4>
+      <div id="messagesList"></div>
+      <div class="comment-input"><input type="text" id="chatInput" placeholder="Type..."><button onclick="sendChatMessage()">Send</button></div>
+      <div id="thaliForTwoBanner" class="hidden"><p>💞 Thali For Two unlocked! <button onclick="createThaliForTwo()">Co-write →</button></p></div>
+    </div>
   </div>
 </div>
 
