@@ -12,6 +12,7 @@
   <div class="logo">🍽️ TaleThali</div>
   <div class="header-right">
     <input type="text" id="search" placeholder="Search a dish...">
+    <button id="darkToggle" title="Toggle dark mode">🌙</button>
     <button id="serveBtn" class="serve-btn">Serve Your Story</button>
   </div>
 </header>
@@ -31,7 +32,7 @@
       <div class="mini-katori k6">✈️</div>
     </div>
     <h2>Pick a bowl. Taste a story.</h2>
-    <p class="subtitle">One thali, 100 different flavours of life. From sweet love to spicy horror.</p>
+    <p class="subtitle">One thali, 100 different flavours of life.</p>
   </section>
 
   <section class="filters">
@@ -69,7 +70,7 @@
     <h2>Serve Your Story to the Thali</h2>
     <input type="text" id="authorName" placeholder="Your Name">
     <select id="categorySelect"></select>
-    <input type="text" id="subjectInput" placeholder="Subject Line - e.g., My First Job Disaster">
+    <input type="text" id="subjectInput" placeholder="Subject Line">
     <textarea id="detailsInput" placeholder="Your full story details..."></textarea>
     <button onclick="saveStory()" id="saveBtn">Serve My Story →</button>
     <p id="saveStatus"></p>
